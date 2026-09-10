@@ -112,7 +112,7 @@ SW1 is configured as the STP root bridge for a predictable Layer 2 topology.
 
 ## Packet Tracer File
 
-The working network is included in this repository as a Cisco Packet Tracer Activity (`.pka`).
+The working network is included in this repository as a Cisco Packet Tracer Activity (`enterprise network by mark lim.pka`).
 
 The activity is intended for viewing and testing the network. Selected topology and configuration options have been restricted, while CLI access is available so the device configurations and `show` commands can be inspected.
 
