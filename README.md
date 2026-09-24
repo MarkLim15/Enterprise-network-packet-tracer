@@ -6,7 +6,7 @@ Instead of creating a separate lab for every topic, I built one network that I c
 
 ## Network Topology
 
-![Enterprise Network Topology](TOPOLOGY.png)
+![Updated Enterprise Network Topology](TOPOLOGY_NEW.png)
 
 The main office LAN is connected to **R1**, which performs Router-on-a-Stick inter-VLAN routing. R1, R2, R3, and R4 form the internal **OSPF Area 0** routed topology. **R2** acts as the WAN/Internet edge router and connects the internal network to the simulated ISP.
 
@@ -59,6 +59,8 @@ The main office LAN is connected to **R1**, which performs Router-on-a-Stick int
 
 **R2** is the Internet edge router. It has a static default route toward the ISP at `10.0.0.6` and uses `default-information originate` to advertise a default route to the internal OSPF domain.
 
+![R2 Default Route and OSPF Default Advertisement](DEFAULT_ROUTE_OSPF.png)
+
 ## Switching Design
 
 **SW1** is the central switch and is configured as the STP root bridge.
@@ -104,7 +106,7 @@ The simulated Internet server is `203.0.113.10`.
 
 End-to-end testing confirmed that devices from the main office, branch network, and internal routed topology can reach the simulated Internet after routing and PAT are applied.
 
-![NAT/PAT Verification](NAT-TEST.png)
+![NAT/PAT End-to-End Verification](NAT_PAT_VERIFICATION.png)
 
 ## Verification
 
@@ -125,6 +127,8 @@ show interfaces trunk
 
 During OSPF verification, R2 formed FULL adjacencies with its internal OSPF neighbors and dynamically learned the VLAN networks behind R1.
 
+![OSPF Neighbor and Route Verification](OSPF_VERIFICATION.png)
+
 ## Troubleshooting Notes
 
 A major goal of this project is to practice troubleshooting, not only configuration. I document the symptom, what I checked, the root cause, the fix, and how I verified recovery.
@@ -140,6 +144,8 @@ A major goal of this project is to practice troubleshooting, not only configurat
 **Resolution:** I enabled OSPF Area 0 on the appropriate R1 subinterfaces using `ip ospf 1 area 0`.
 
 **Verification:** R2 then learned `192.168.10.0/24`, `192.168.20.0/24`, `192.168.30.0/24`, `192.168.40.0/24`, and `192.168.50.0/24` as OSPF routes. R2, R3, and R4 could then reach the networks behind R1.
+
+![R1 ROAS Subinterfaces Participating in OSPF](OSPF_TROUBLESHOOTING.png)
 
 ### Incident 2 - R2 Could Reach the Internet Server but Internal Devices Could Not
 
